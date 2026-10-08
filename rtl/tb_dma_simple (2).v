@@ -1,9 +1,6 @@
 `timescale 1ns/1ps
 
-// Small, self-contained testbench for axi_dma_top.
-// No separate BFM module - the write/read tasks are right here so the
-// whole flow (drive AXI handshake -> program registers -> poll status ->
-// check memory) fits in one file and is easy to explain/reproduce.
+
 
 module tb_dma_simple;
 
@@ -42,10 +39,7 @@ axi_dma_top dut (
     .irq_dma_done(irq_dma_done)
 );
 
-// ---- write one register over AXI4-Lite ----
-// AW and W are independent channels - a slave is allowed to accept them
-// on different cycles, so wait for each ready separately and drop that
-// valid as soon as its own handshake completes.
+
 task axi_write(input [31:0] addr, input [31:0] data);
     reg aw_done, w_done;
     begin
