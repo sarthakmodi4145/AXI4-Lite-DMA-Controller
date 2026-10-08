@@ -189,11 +189,7 @@ initial begin
         $display("[%0t] Transfer 1 (len=%0d) FAILED (%0d errors)", $time, XFER_LEN, errors);
     end
 
-    // ---------------------------------------------------------------
-    // Second, independent transfer: different addresses, length = 1.
-    // Confirms the edge-triggered start bit correctly re-arms for a new
-    // transfer instead of only ever firing once.
-    // ---------------------------------------------------------------
+   
     begin : second_transfer
         integer errors2;
         reg [31:0] status2;
@@ -255,18 +251,7 @@ initial begin
     $finish;
 end
 
-// Optional cycle-by-cycle debug trace of the DMA datapath during a
-// transfer. Uncomment if you need to debug at the waveform/signal level.
-// always @(posedge clk) begin
-//     if (dut.u_register_file.dma_busy)
-//         $display("[%0t] state=%0d crr_len=%0d rd_addr=%0d wr_addr=%0d wr_en=%b wr_data=%h rd_data=%h",
-//                   $time, dut.u_dma_fsm.state, dut.u_dma_controller.crr_length,
-//                   dut.u_dma_controller.mem_rd_addr, dut.u_dma_controller.mem_wr_addr,
-//                   dut.u_dma_controller.mem_wr_en, dut.u_dma_controller.mem_wr_data,
-//                   dut.u_memory_model.rd_data);
-// end
 
-// Safety timeout
 initial begin
     #200000;
     $display("[%0t] ERROR: simulation timeout", $time);
